@@ -1,73 +1,57 @@
-SMART CONTRACT PROJECT
+# SimpleContract
 
-Here in this project we have written a smart contract that shows the implementation of require(), assert(), and revert() for condition checking and error handling.
+This Solidity smart contract demonstrates the use of `require()`, `assert()`, and `revert()` statements. The contract allows users to set and get a value, with various checks and conditions to ensure proper functionality.
 
-DISCRIPTION
+## Contract Overview
 
-This smart contract allows users to set, increase and decrease a stored worth. It includes three functions that are stated below:
+The `SimpleContract` contract includes three primary functions:
 
- (1) requireSet(uint _Worth): It sets the worth to the specified _Worth parameter. It uses require() to check that the worth is greater that zero.
- 
- (2) assertIncrease(uit _amount): It increases the current worth by the specified _amount parameter. It uses assert() to check that the new worth is greater than
- the previous worth.
- 
- (3) revertDecrease(uiint _amount): It decreases the current worth by the specified _amount parameter. It uses revert() to revert the transaction if the amount exceeds the current worth.
+1. **`setValue(uint256 newValue)`**: Sets a new value, ensuring it is not zero.
+2. **`getValue()`**: Returns the current value, ensuring it is always non-negative.
+3. **`resetValue()`**: Resets the value to zero, unless it is already zero.
 
- PREREQUISITES
+## Functions
 
- To use this smart contract, you'll need the following:
- 
- (1) solidity compiler version 0.8.0 or higher.
- 
- (2) Ethereum development environment(eg., Remix, Truffle, Hardhat)
- 
- (3) Test environment(eg., Ganache)
+### `setValue(uint256 newValue)`
 
-GETTING STARTED
+This function sets the value to `newValue`. It uses the `require()` statement to ensure that the new value is not zero.
 
-Executing the program
-
-To run this program, you can you remix, an online solidity IDE. To get started, go to the remix website https://remix.ethereum.org/.
-Once you reach the remix website, create a new file and save the file with a .sol extension and then copy paste the following code in the file:
-
-// SPDX-License-Identifier: MIT
-
-pragma solidity ^0.8.0;
-
-contract SContract {
-    uint public Worth;
-    
-        function requireSet (uint _Worth) external {
-        // Using require() to check a condition
-        require(_Worth > 0, "Worth should be more than zero");
-        
-        Worth = _Worth;
-    }
-    
-    function assertIncrease (uint _amount) external {
-        // Using assert() to check an invariant
-        uint newWorth = Worth + _amount;
-        assert(newWorth > Worth);
-        
-        Worth = newWorth;
-    }
-    
-    function revertDecrease (uint _amount) external {
-        // Using revert() to revert the transaction
-        if (_amount > Worth) {
-            revert("Amount exceeds present Worth");
-        }
-        
-        Worth-= _amount;
+```solidity
+function setValue(uint256 newValue) public {
+    require(newValue != 0, "Value must be non-zero");
+    value = newValue;
 }
+Parameter: newValue - The new value to be set.
+Conditions:
+If newValue is zero, the transaction will be reverted with an error message "Value must be non-zero".
+getValue()
+This function returns the current value. It uses the assert() statement to ensure that the value is always non-negative.
+function getValue() public view returns (uint256) {
+    assert(value >= 0);
+    return value;
+}
+Returns: The current value.
+Conditions:
+If value is negative (which should not happen), the transaction will be reverted.
+resetValue()
+This function resets the value to zero. It uses the revert() statement to explicitly revert the transaction if the current value is already zero.
+function resetValue() public {
+    if (value == 0) {
+        revert("Value is already zero");
+    }
+    value = 0;
 }
 
+Conditions:
+If value is already zero, the transaction will be reverted with an error message "Value is already zero".
+Getting Started
+To deploy and interact with this contract, follow these steps:
 
-1. Compile the smart contract by using your preferred solidity compiler.
-  
-2. Deploy the smart contract to your chosen Ethereum development environment.
-  
-3. Interact with the contract using the provided functions( assertIncrease, requireSet, revertDecrease).
+Install Solidity and a development environment like Remix IDE.
+Copy the contract code into a new Solidity file in your development environment.
+Compile the contract.
+Deploy the contract to a local Ethereum network or a testnet.
+Use the provided functions (setValue, getValue, resetValue) to interact with the contract.
 
 ## Authors
 
